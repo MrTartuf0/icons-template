@@ -1,16 +1,16 @@
 <template>
   
-  <div>
-    {{ $route.params.name }}
-  </div>
-
-  
+  <!-- {{ $route.params.name }} -->
   <div class="flex">
 
-    <div class="px-8 py-2 bg-sidebar min-h-screen space-y-2">
+    <div class="lg:px-8 px-2 py-2 bg-sidebar min-h-screen space-y-2">
+      <nuxt-link :to="'/'" class="flex gap-4 hover:bg-sidebarActive">
+        <img class="h-6" :src="index.story.content.homeIcon">
+        <span class="lg:inline-block hidden"> home </span>
+      </nuxt-link> 
       <nuxt-link :to="element.slug" class="flex gap-4 hover:bg-sidebarActive" v-for="element in data.data.stories" >
         <img class="h-6" :src="element.content.icon">
-        {{ element.name }}
+        <span class="lg:inline-block hidden">{{ element.name }}</span>
       </nuxt-link>
     </div>
 
@@ -39,6 +39,8 @@ const { data } = await useAsyncData(
         "starts_with": "icons/",
       })
   );
+
+  const { data: index } = await useFetch('https://api.storyblok.com/v2/cdn/stories/index?&version=published&token=uiHAQzxUn1tVtEmEZRrKZwtt')
 
   const icon = computed(() => {
     let activeIcon = {}
