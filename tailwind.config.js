@@ -9,11 +9,16 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
+    fontFamily: {
+      'sora': ['Sora' , 'sans-serif']
+    },
     extend: {
       colors: {
         'white': '#ffffff',
         'sidebar': '#f2f2f3',
-        'sidebarActive': '#e9e9eb'
+        'sidebarActive': '#e9e9eb',
+        darkBlue: '#090F24',
+        topGradient: '#9487FF40',
       },
     },
   },
