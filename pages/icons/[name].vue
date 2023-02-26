@@ -1,13 +1,14 @@
 <template>
-  
-  <!-- {{ $route.params.name }} -->
-  <div class="flex">
+  <div class="pt-20 pb-28 max-w-sm mx-auto text-center">
+    <img :src="data.content.icon" alt="icon" class="mx-auto py-5 box-content">
+    <p class="font-sora pt-2 pb-3 font-semibold text-3xl">{{ data.content.title }}</p>
+    <p class="text-darkBlue/50 text-sm ">{{ data.content.description }}</p>
+  </div>
+
+
+  <!-- <div class="flex">
 
     <div class="lg:px-8 px-2 py-2 bg-sidebar min-h-screen space-y-2">
-      <nuxt-link :to="'/'" class="flex gap-4 hover:bg-sidebarActive">
-        <img class="h-6" :src="index.story.content.homeIcon">
-        <span class="lg:inline-block hidden"> home </span>
-      </nuxt-link> 
       <nuxt-link :to="element.slug" class="flex gap-4 hover:bg-sidebarActive" v-for="element in data.data.stories" >
         <img class="h-6" :src="element.content.icon">
         <span class="lg:inline-block hidden">{{ element.name }}</span>
@@ -23,43 +24,26 @@
       </div>
     </div>
 
-  </div>
+  </div> -->
 
 </template>
 
 <script setup>
-const route = useRoute()
-const storyblokApi = useStoryblokApi();
+  const route = useRoute()
 
-const { data } = await useAsyncData(
-    "vue",
-    async () =>
-      await storyblokApi.get(`cdn/stories/`, {
-        "version": "draft",
-        "starts_with": "icons/",
-      })
-  );
+  const data = await useAsyncStoryblok(`icons/${route.params.name}`, { version: 'published' })
 
-  const { data: index } = await useFetch('https://api.storyblok.com/v2/cdn/stories/index?&version=published&token=uiHAQzxUn1tVtEmEZRrKZwtt')
-
-  const icon = computed(() => {
-    let activeIcon = {}
-    data.value.data.stories.forEach(element => {
-      if(element.slug===route.params.name){
-        activeIcon = element
-      }
-    })
-    return activeIcon
-  })
+  // const icon = computed(() => {
+  //   let activeIcon = {}
+  //   data.value.data.stories.forEach(element => {
+  //     if(element.slug===route.params.name){
+  //       activeIcon = element
+  //     }
+  //   })
+  //   return activeIcon
+  // })
 
 
 
 </script>
 
-
-<style scoped>
-  .router-link-active{
-    font-weight: 700;
-    background-color: #e9e9eb;
-  }
-</style>
